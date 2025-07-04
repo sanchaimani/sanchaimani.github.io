@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
+    <title>Sanchai's Portfolio</title>
     <style>
         * {
             margin: 0;
@@ -32,6 +32,11 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            transition: background-color 0.3s;
+        }
+        
+        body.dark-mode header {
+            background: #1a1a1a;
         }
         
         nav {
@@ -122,6 +127,11 @@
             text-align: center;
             padding: 30px 0;
             margin-top: 50px;
+            transition: background-color 0.3s;
+        }
+        
+        body.dark-mode footer {
+            background: #1a1a1a;
         }
         
         /* Animations */
@@ -143,6 +153,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: background-color 0.5s ease;
         }
         
         body.dark-mode .skill {
@@ -185,7 +196,7 @@
             padding: 25px;
             border-radius: 8px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
         }
         
         body.dark-mode .project {
@@ -231,6 +242,7 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: background-color 0.3s;
         }
         
         body.dark-mode form {
@@ -287,6 +299,118 @@
         
         #darkModeToggle:hover {
             transform: scale(1.1);
+        }
+        
+        /* Scroll to top button */
+        #scrollToTop {
+            position: fixed;
+            bottom: 90px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #e8491d;
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        
+        #scrollToTop:hover {
+            transform: scale(1.1);
+            background: #cf401a;
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            transition: opacity 0.3s;
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 800px;
+            position: relative;
+            animation: modalFadeIn 0.4s;
+        }
+        
+        body.dark-mode .modal-content {
+            background-color: #333;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: #e8491d;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Loading animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+        
+        body.dark-mode .loader {
+            background: #222;
+        }
+        
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .loader-circle {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #e8491d;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
         }
         
         /* Responsive Design */
@@ -353,13 +477,23 @@
             form {
                 padding: 20px;
             }
+            
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Loading screen -->
+    <div class="loader">
+        <div class="loader-circle"></div>
+    </div>
+
     <header>
         <nav>
-            <h1>My Portfolio</h1>
+            <h1>Sanchai's Portfolio</h1>
             <ul>
                 <li><a href="#about">About</a></li>
                 <li><a href="#skills">Skills</a></li>
@@ -372,7 +506,7 @@
     <section class="hero">
         <div class="container">
             <h1>Hi, I'm <span>Sanchai</span></h1>
-            <h2>A Passionate python and Web Developer </h2>
+            <h2>A Passionate Python and Web Developer</h2>
             <a href="#contact" class="btn">Get In Touch</a>
         </div>
     </section>
@@ -403,15 +537,15 @@
     <section id="contact" class="container">
         <h2>Contact Me</h2>
         <form id="contactForm">
-            <input type="text" placeholder="Your Name" required>
-            <input type="email" placeholder="Your Email" required>
-            <textarea placeholder="Your Message" required></textarea>
+            <input type="text" id="name" placeholder="Your Name" required>
+            <input type="email" id="email" placeholder="Your Email" required>
+            <textarea id="message" placeholder="Your Message" required></textarea>
             <button type="submit" class="btn">Send Message</button>
         </form>
     </section>
 
     <footer>
-        <p>&copy; <span id="year"></span> My Portfolio. All rights reserved.</p>
+        <p>&copy; <span id="year"></span> Sanchai's Portfolio. All rights reserved.</p>
         <div style="margin-top: 20px;">
             <a href="https://github.com/sanchaimani" target="_blank" style="color: white; margin: 0 10px;">GitHub</a>
             <a href="https://linkedin.com/in/sanchai-mani-551933251" target="_blank" style="color: white; margin: 0 10px;">LinkedIn</a>
@@ -420,8 +554,28 @@
     </footer>
 
     <button id="darkModeToggle">🌙</button>
+    <button id="scrollToTop">↑</button>
+
+    <!-- Modal container -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <p id="modalDescription"></p>
+            <p class="technologies"><strong>Technologies:</strong> <span id="modalTechnologies"></span></p>
+            <a href="#" id="modalLink" class="btn" target="_blank">View Project</a>
+        </div>
+    </div>
 
     <script>
+        // Wait for the page to load
+        window.addEventListener('load', function() {
+            // Hide loader after 1.5 seconds (simulate loading)
+            setTimeout(function() {
+                document.querySelector('.loader').classList.add('hidden');
+            }, 1500);
+        });
+
         // Current year for footer
         document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -430,7 +584,7 @@
             { name: "HTML", level: 95 },
             { name: "CSS", level: 90 },
             { name: "JavaScript", level: 85 },
-            { name: "Sql", level: 80 },
+            { name: "SQL", level: 80 },
             { name: "Node.js", level: 75 },
             { name: "Python", level: 70 },
             { name: "Git", level: 85 },
@@ -440,22 +594,25 @@
         // Projects data
         const projects = [
             {
-                title: "Efficient and secure cnn training with split learning for mnist",
-                description: "A fully responsive streamlit platform running with localhost that train and analyse.",
-                technologies: ["PYTHON", "CNN"],
-                link: "https://github.com/sanchaimani/Efficient-and-secure-cnn-with-split-learning.git"
+                title: "Efficient and Secure CNN Training with Split Learning for MNIST",
+                description: "A fully responsive Streamlit platform running with localhost that trains and analyzes CNN models using split learning for enhanced security and efficiency. The application demonstrates how to split neural network training between client and server while maintaining data privacy.",
+                technologies: ["Python", "CNN", "TensorFlow", "Streamlit"],
+                link: "https://github.com/sanchaimani/Efficient-and-secure-cnn-with-split-learning.git",
+                details: "This project implements a novel approach to deep learning where the neural network is split between client and server. The client keeps sensitive data private while still benefiting from server-side computation. The application includes visualization of training progress and model performance metrics."
             },
             {
                 title: "Hospital Management System",
-                description: "The application have access for doctors,staffs,patient to register and schedule appoinment.",
-                technologies: ["HTML", "CSS", "JAVASCRIPT","Node.js"],
-                link: "https://github.com/sanchaimani/Hospital-management.git"
+                description: "A comprehensive hospital management application with access for doctors, staff, and patients to register and schedule appointments. Features include patient records management, appointment scheduling, and prescription tracking.",
+                technologies: ["HTML", "CSS", "JavaScript", "Node.js", "MongoDB"],
+                link: "https://github.com/sanchaimani/Hospital-management.git",
+                details: "The system includes three distinct user roles with appropriate permissions. Doctors can view their schedules and patient records, staff can manage appointments and billing, and patients can book appointments and view their medical history. The backend uses Node.js with Express and MongoDB for data storage."
             },
             {
-                title: "Task Management ",
-                description: "Productivity application for creating, organizing, and tracking tasks functionality.",
-                technologies: ["HTML", "CSS", "JAVASCRIPT"],
-                link: "https://github.com/sanchaimani/Todolist.git"
+                title: "Task Management Application",
+                description: "A productivity application for creating, organizing, and tracking tasks with drag-and-drop functionality, due date reminders, and task categorization.",
+                technologies: ["HTML", "CSS", "JavaScript", "Local Storage"],
+                link: "https://github.com/sanchaimani/Todolist.git",
+                details: "This application allows users to create tasks with priorities and due dates, organize them into projects, and track completion. Features include: drag-and-drop reordering, local storage for persistence between sessions, and responsive design that works on mobile devices."
             }
         ];
 
@@ -483,7 +640,7 @@
                 <h3>${project.title}</h3>
                 <p>${project.description}</p>
                 <p class="technologies"><strong>Technologies:</strong> ${project.technologies.join(', ')}</p>
-                <a href="${project.link}" class="btn" target="_blank">View Project</a>
+                <button class="btn view-details-btn" data-project-id="${projects.indexOf(project)}">View Details</button>
             `;
             projectsContainer.appendChild(projectElement);
         });
@@ -498,22 +655,47 @@
             });
         });
 
-        // Form submission
+        // Form submission with validation
         const contactForm = document.getElementById('contactForm');
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Thank you for your message! I will get back to you soon.');
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // Simple validation
+            if (!name || !email || !message) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Validate email format
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            // In a real application, you would send this data to a server
+            console.log('Form submitted:', { name, email, message });
+            
+            // Show success message
+            alert('Thank you for your message, ' + name + '! I will get back to you soon.');
             this.reset();
         });
 
         // Dark mode toggle
         const darkModeToggle = document.getElementById('darkModeToggle');
         darkModeToggle.addEventListener('click', () => {
+            document.body.style.transition = 'background-color 0.5s ease, color 0.5s ease';
             document.body.classList.toggle('dark-mode');
             darkModeToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
-            
-            // Save preference to localStorage
             localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            
+            // Also transition the skill bars and project cards
+            document.querySelectorAll('.skill, .project').forEach(el => {
+                el.style.transition = 'background-color 0.5s ease';
+            });
         });
 
         // Check for saved dark mode preference
@@ -535,6 +717,70 @@
 
         document.querySelectorAll('.skill').forEach(skill => {
             observer.observe(skill);
+        });
+
+        // Scroll to top button
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.style.display = 'flex';
+            } else {
+                scrollToTopBtn.style.display = 'none';
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Project modal functionality
+        const modal = document.getElementById('projectModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalTechnologies = document.getElementById('modalTechnologies');
+        const modalLink = document.getElementById('modalLink');
+        const closeModal = document.querySelector('.close-modal');
+
+        // Open modal when View Details button is clicked
+        document.querySelectorAll('.view-details-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const projectId = this.getAttribute('data-project-id');
+                const project = projects[projectId];
+                
+                modalTitle.textContent = project.title;
+                modalDescription.textContent = project.details;
+                modalTechnologies.textContent = project.technologies.join(', ');
+                modalLink.href = project.link;
+                
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+            });
+        });
+
+        // Close modal when X is clicked
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        // Close modal when clicking outside the modal content
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && modal.style.display === 'block') {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
         });
     </script>
 </body>
